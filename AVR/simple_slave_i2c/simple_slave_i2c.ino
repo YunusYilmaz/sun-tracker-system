@@ -447,20 +447,35 @@ int16_t data_imu()
   AcZ = Wire.read() << 8 | Wire.read();
   temp = Wire.read() << 8 | Wire.read();
 
-  int xAng = map(AcX, minVal, maxVal, -45, 45);
-  int yAng = map(AcY, minVal, maxVal, -45, 45);
-  int zAng = map(AcZ, minVal, maxVal, -45, 45);
-  
+  int xAng = map(AcX, minVal, maxVal, -90, 90);
+  int yAng = map(AcY, minVal, maxVal, -90, 90);
+  int zAng = map(AcZ, minVal, maxVal, -90, 90);
   const float TEMP_MUL = 1.0 / 340.0;
   temp = ((temp * TEMP_MUL) + 36.53);
 
+  // x= RAD_TO_DEG * (atan2(-yAng, -zAng)+PI);
   y = RAD_TO_DEG * (atan2(-xAng, -zAng) + PI);
+  // z= RAD_TO_DEG * (atan2(-yAng, -xAng)+PI);
 
   if (180 < y)
   {
     y = y - 360;
   }
 
+  /*
+// to take reverse pcb
+  if (180 < y)
+  {
+    y = y - 180;
+
+    return y;// = 360 - y;
+  }
+  else if (180 > y)
+  {
+  //   return y;
+    return 180 - y;
+  }
+  */
   return y;
 }
 
