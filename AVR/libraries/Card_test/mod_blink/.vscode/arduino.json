@@ -1,0 +1,7 @@
+{
+    "configuration": "cpu=atmega328",
+    "board": "arduino:avr:nano",
+    "programmer": "arduino:stk500",
+    "port": "COM3",
+    "sketch": "mod_blink.ino"
+}
